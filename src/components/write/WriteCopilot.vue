@@ -478,10 +478,10 @@ const handleSettingsSelected = (settings: Setting[]) => {
   selectedSettings.value = settings
 }
 
-  // 资料库选择
-  const handleReferencesSelected = (references: ReferenceLibrary[]) => {
-  	selectedReferences.value = references
-  }
+// 资料库选择
+const handleReferencesSelected = (references: ReferenceLibrary[]) => {
+  selectedReferences.value = references
+}
 
 // 清空对话
 const handleClearConversation = () => {
@@ -614,7 +614,21 @@ const handleRegenerateMessage = async (message: Message) => {
       content: setting.content,
       status: setting.status,
       type: setting.type
-    }))
+    })),
+    selectedReferences: selectedReferences.value.map(reference => {
+      let tags: string[] = []
+      try {
+        tags = JSON.parse(reference.tags)
+      } catch {
+        tags = []
+      }
+      return {
+        id: reference.id,
+        title: reference.title,
+        content: reference.content,
+        tags
+      }
+    })
   }
 
   // 重新生成回复
@@ -707,7 +721,6 @@ const handleStartWriting = async (message: Message) => {
 
   } catch (error) {
     console.error('WriteCopilot: 内容写作失败', error)
-    // 出错时也要触发完成事件
     const completeEvent = new CustomEvent('writing-complete', {
       detail: { message: message.content, error: error }
     })
@@ -734,9 +747,24 @@ const buildContentWritingContext = async (message: Message, vectorSearchResults?
       status: setting.status,
       type: setting.type
     })),
+    selectedReferences: selectedReferences.value.map(reference => {
+      let tags: string[] = []
+      try {
+        tags = JSON.parse(reference.tags)
+      } catch {
+        tags = []
+      }
+      return {
+        id: reference.id,
+        title: reference.title,
+        content: reference.content,
+        tags
+      }
+    }),
     vectorSearchResults
   }
 }
+
 
 // 数据加载
 // 加载设置

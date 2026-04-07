@@ -21,6 +21,14 @@ export interface AppUpdateState {
   errorMessage: string | null
 }
 
+export interface LatestReleaseNotes {
+  version: string
+  title: string
+  body: string
+  publishedAt: string | null
+  url: string
+}
+
 declare global {
   interface Window {
     electronAPI: {
@@ -157,6 +165,7 @@ declare global {
       checkForAppUpdates: () => Promise<AppUpdateState>
       downloadAppUpdate: () => Promise<AppUpdateState>
       installAppUpdate: () => Promise<AppUpdateState>
+      getLatestReleaseNotes: () => Promise<LatestReleaseNotes>
       onAppUpdateStateChanged: (callback: (state: AppUpdateState) => void) => () => void
       openExternal: (url: string) => Promise<void>
 

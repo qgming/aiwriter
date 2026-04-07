@@ -161,6 +161,10 @@ watch(() => props.selectedSettings, (newSettings) => {
   }
 }, { immediate: true, deep: true })
 
+watch(() => props.selectedReferences, (newReferences) => {
+  selectedReferences.value = newReferences ? [...newReferences] : []
+}, { immediate: true, deep: true })
+
 // 检查是否需要显示展开按钮
 const checkExpandButton = () => {
   if (settingsContainerRef.value) {

@@ -123,6 +123,7 @@ const api = {
   checkForAppUpdates: () => ipcRenderer.invoke('app-update:check'),
   downloadAppUpdate: () => ipcRenderer.invoke('app-update:download'),
   installAppUpdate: () => ipcRenderer.invoke('app-update:install'),
+  getLatestReleaseNotes: () => ipcRenderer.invoke('get-latest-release-notes'),
   onAppUpdateStateChanged: (callback: (state: any) => void) => {
     const listener = (_event: unknown, state: any) => callback(state)
     ipcRenderer.on('app-update:state-changed', listener)
@@ -140,3 +141,4 @@ const api = {
 }
 
 contextBridge.exposeInMainWorld('electronAPI', api)
+

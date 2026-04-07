@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import type { ReferenceLibrary } from '@/electron.d'
-import { useFeatureConfigsStore } from './featureConfigs'
 
 export const useReferenceLibraryStore = defineStore('referenceLibrary', () => {
   const references = ref<ReferenceLibrary[]>([])
